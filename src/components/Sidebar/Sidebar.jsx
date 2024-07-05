@@ -19,7 +19,7 @@ const Sidebar = () => {
         <div className="top">
             <img onClick={() => setExtended(prev=>!prev)}  className='menu' src={assets.menu_icon} alt="" />
             <div onClick={()=> newChat()} className="new-chat">
-                <img src={assets.plus_icon} alt="" />
+                <img onClick={() => newChat()} src={assets.plus_icon} alt="" />
                 {extended &&<p>New Chat</p>}
             </div>
             {extended
@@ -27,7 +27,7 @@ const Sidebar = () => {
                 <p className="recent-title">Recent</p>
                 {prevPrompts.map((item, index) => {
                     return (
-                        <div onClick={() => loadPrompt(item)} className="recent-entry">
+                        <div key={index} onClick={() => loadPrompt(item)} className="recent-entry">
                             <img src={assets.message_icon} alt="" />
                             <p>{item.slice(0,18)} ...</p>
                         </div>

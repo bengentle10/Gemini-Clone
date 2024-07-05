@@ -17,9 +17,30 @@ const ContextProvider = (props) => {
         setResultData("")
         setLoading(true)
         setShowResult(true)
-        setRecentPrompt(input)
-        const response  = await runChart(input)
-        setResultData(response)
+        let response;
+       if (prompt != undefined) {
+            response = await runChart(prompt)
+       } else {
+            setPrevPrompts(prev => [...prev, input])
+            setRecentPrompt(input)
+            response = await runChart(input)
+       }
+        let responseArray = response.split("**")
+        let newResponse = ""
+        for(let i = 0; i < responseArray.length; i++) {
+            if (i == 0 || i%2 == 0) {
+                newResponse += responseArray[i]
+            } else {
+                newResponse += "<b>"+responseArray[i]+"</b>"
+            }
+        }
+        let newResponse2 = newResponse.split("*").join("</br>")
+        let newResponseArray = newResponse2.split(" ");
+        for(let i = 0; i < newResponseArray.length; i++) {
+            const newWord = newResponseArray[i]
+            delayPara(i, newWord + " ");
+        }
+        
         setLoading(false)
         setInput("")
 

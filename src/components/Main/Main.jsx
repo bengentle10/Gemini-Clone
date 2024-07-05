@@ -52,11 +52,13 @@ const Main = () => {
             
             <div className="main-bottom">
                 <div className="search-box">
-                    <input value={input} onChange={(e) => setInput(e.target.value)} type="text" placeholder="Enter a prompt here" />
+                    <input value={input} onKeyDown={(e) => {if(e.key === 'Enter') onSent()}} onChange={(e) => setInput(e.target.value)} type="text" placeholder="Enter a prompt here" />
                     <div>
                         <img src={assets.gallery_icon} alt="" />
                         <img src={assets.mic_icon} alt="" />
-                        <img onClick={() => {onSent()}} src= {assets.send_icon} alt="" />
+                       {input ?
+                         <img onClick={() => {onSent()}} src= {assets.send_icon} alt="" /> :
+                         null} 
                     </div>
                 </div>
                 <p className="bottom-info">
